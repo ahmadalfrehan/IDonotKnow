@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../Register/Register.dart';
 import 'Cubit/Cubit.dart';
 import 'Cubit/States.dart';
 
@@ -107,8 +108,9 @@ class Login extends StatelessWidget {
                               fontWeight: FontWeight.w300, fontSize: 20),
                         ),
                         SizedBox(
-                          height:
-                              MediaQuery.of(context).size.height > 800 ? 80 : 40,
+                          height: MediaQuery.of(context).size.height > 800
+                              ? 80
+                              : 40,
                         ),
                         Padding(
                           padding: const EdgeInsets.all(10.0),
@@ -124,9 +126,10 @@ class Login extends StatelessWidget {
                                   child: const Text(
                                     'Sign up with Email',
                                     style: TextStyle(
-                                        fontWeight: FontWeight.w400,
-                                        fontSize: 15,
-                                        color: Colors.black,),
+                                      fontWeight: FontWeight.w400,
+                                      fontSize: 15,
+                                      color: Colors.black,
+                                    ),
                                   ),
                                 ),
                               ),
@@ -134,8 +137,9 @@ class Login extends StatelessWidget {
                           ),
                         ),
                         SizedBox(
-                          height:
-                              MediaQuery.of(context).size.height > 800 ? 30 : 10,
+                          height: MediaQuery.of(context).size.height > 800
+                              ? 30
+                              : 10,
                         ),
                         if (r.a2)
                           Form(
@@ -146,7 +150,8 @@ class Login extends StatelessWidget {
                                     emailOrPhoneController),
                                 textFormF('Password', passwordController),
                                 Padding(
-                                  padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 20),
+                                  padding: const EdgeInsets.symmetric(
+                                      vertical: 10, horizontal: 20),
                                   child: MaterialButton(
                                     onPressed: () {
                                       if (far.currentState!.validate()) {
@@ -222,11 +227,12 @@ class Login extends StatelessWidget {
                                       Text(
                                         'Sign up with Google',
                                         style: TextStyle(
-                                          fontSize:
-                                              MediaQuery.of(context).size.width <
-                                                      399
-                                                  ? 8
-                                                  : 11,
+                                          fontSize: MediaQuery.of(context)
+                                                      .size
+                                                      .width <
+                                                  399
+                                              ? 8
+                                              : 11,
                                           fontWeight: FontWeight.w500,
                                           color: Colors.black,
                                         ),
@@ -246,17 +252,18 @@ class Login extends StatelessWidget {
                                   child: Row(
                                     children: [
                                       const Icon(Icons.facebook),
-                                      SizedBox(
+                                      const SizedBox(
                                         width: 5,
                                       ),
                                       Text(
                                         'Sign up with Facebook',
                                         style: TextStyle(
-                                          fontSize:
-                                              MediaQuery.of(context).size.width <
-                                                      399
-                                                  ? 8
-                                                  : 11,
+                                          fontSize: MediaQuery.of(context)
+                                                      .size
+                                                      .width <
+                                                  399
+                                              ? 8
+                                              : 11,
                                           fontWeight: FontWeight.w500,
                                           color: Colors.black,
                                         ),
@@ -269,15 +276,23 @@ class Login extends StatelessWidget {
                           ),
                         ),
                         SizedBox(
-                          height:
-                              MediaQuery.of(context).size.height > 800 ? 30 : 10,
+                          height: MediaQuery.of(context).size.height > 800
+                              ? 30
+                              : 10,
                         ),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
                             const Text('Don’t have an account?'),
-                            MaterialButton(
-                              onPressed: () {},
+                            TextButton(
+                              onPressed: () {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => Register(),
+                                  ),
+                                );
+                              },
                               child: const Text(
                                 'Sign up',
                                 style: TextStyle(
