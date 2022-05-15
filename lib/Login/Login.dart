@@ -25,26 +25,11 @@ class Login extends StatelessWidget {
             scaff.showSnackBar(
               SnackBar(
                 elevation: 0,
-                backgroundColor: Colors.transparent,
-                content: Column(
-                  children: [
-                    const SizedBox(
-                      height: 20,
-                    ),
-                    Container(
-                      height: MediaQuery.of(context).size.height * 0.07,
-                      width: MediaQuery.of(context).size.width * 0.9,
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(55),
-                        color: Colors.green,
-                      ),
-                      child: Center(
-                        child: Text(
-                          state.success,
-                        ),
-                      ),
-                    ),
-                  ],
+                backgroundColor: Colors.green,
+                content: Center(
+                  child: Text(
+                    state.success,
+                  ),
                 ),
               ),
             );
@@ -52,24 +37,11 @@ class Login extends StatelessWidget {
             scaff.showSnackBar(
               SnackBar(
                 elevation: 0,
-                backgroundColor: Colors.transparent,
-                content: Column(
-                  children: [
-                    const SizedBox(
-                      height: 20,
-                    ),
-                    Container(
-                      height: MediaQuery.of(context).size.height * 0.07,
-                      width: MediaQuery.of(context).size.width * 0.9,
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(55),
-                        color: Colors.red,
-                      ),
-                      child: const Center(
-                        child: Text("An error occurred try again !"),
-                      ),
-                    ),
-                  ],
+                backgroundColor: Colors.red,
+                content:  Center(
+                  child: Text("An error occurred try again !"
+                      "${state.error}"
+                  ),
                 ),
               ),
             );

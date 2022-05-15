@@ -8,209 +8,116 @@ import 'HelperTalents.dart';
 
 class Register extends StatelessWidget {
   Register({Key? key}) : super(key: key);
-  var nameController = TextEditingController();
-
-  var emailOrPhoneController = TextEditingController();
-
-  var genderController = TextEditingController();
-
-  var passwordController = TextEditingController();
   var far = GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context) {
     var scaff = ScaffoldMessenger.of(context);
-    return BlocProvider(
-      create: (BuildContext context) => RegisterCubit(),
-      child: BlocConsumer<RegisterCubit, RegisterStates>(
-        listener: (context, state) {
-          if (state is RegisterSuccessState) {
-            scaff.showSnackBar(
-              SnackBar(
-                elevation: 0,
-                backgroundColor: Colors.transparent,
-                content: Column(
-                  children: [
-                    const SizedBox(
-                      height: 20,
-                    ),
-                    Container(
-                      height: MediaQuery.of(context).size.height * 0.07,
-                      width: MediaQuery.of(context).size.width * 0.9,
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(55),
-                        color: Colors.green,
-                      ),
-                      child: Center(
-                        child: Text(
-                          state.success,
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            );
-          } else if (state is RegisterErrorState) {
-            scaff.showSnackBar(
-              SnackBar(
-                elevation: 0,
-                backgroundColor: Colors.transparent,
-                content: Column(
-                  children: [
-                    const SizedBox(
-                      height: 20,
-                    ),
-                    Container(
-                      height: MediaQuery.of(context).size.height * 0.07,
-                      width: MediaQuery.of(context).size.width * 0.9,
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(55),
-                        color: Colors.red,
-                      ),
-                      child: const Center(
-                        child: Text("An error occurred try again !"),
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            );
-          }
-        },
-        builder: (context, state) {
-          var r = RegisterCubit.get(context);
-          return Scaffold(
-            body: SafeArea(
-              child: Container(
-                child: Center(
-                  child: SingleChildScrollView(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        if (state is RegisterLoadingState)
-                          const SizedBox(height: 30),
-                        if (state is RegisterLoadingState)
-                          Center(child: LinearProgressIndicator()),
-                        const SizedBox(
-                          height: 30,
-                        ),
-                        Image.asset('assets/Group_58.png'),
-                        const SizedBox(
-                          height: 30,
-                        ),
-                        Form(
-                          key: far,
-                          child: Column(
-                            children: [
-                              textFormF('Full Name', nameController),
-                              textFormF('Email Adress or Moblie number',
-                                  emailOrPhoneController),
-                              textFormF('Password', passwordController),
-                              textFormF('Gender', genderController),
-                            ],
-                          ),
-                        ),
-                        const Padding(
-                          padding: EdgeInsets.all(8.0),
-                          child: Divider(color: Colors.black),
-                        ),
-                        const Padding(
-                          padding: EdgeInsets.all(8.0),
-                          child: Text(
-                            'What talents do you have ?',
-                            style: TextStyle(
-                                fontWeight: FontWeight.w600, fontSize: 25),
-                          ),
-                        ),
-                        const Padding(
-                          padding: EdgeInsets.all(8.0),
-                          child: Text(
-                            'Maximum of 3 talents can be selected',
-                            style: TextStyle(
-                                fontWeight: FontWeight.w500, fontSize: 15),
-                          ),
-                        ),
-                        HelperTalents(),
-                        const SizedBox(
-                          height: 10,
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: MaterialButton(
-                            onPressed: () {
-                              r.fill();
-                              if (r.talents.length > 3) {
-                                scaff.showSnackBar(
-                                  const SnackBar(
-                                    content:
-                                        Text('please select only three talents'),
-                                    backgroundColor: Colors.red,
-                                  ),
-                                );
-                              } else if (far.currentState!.validate()) {
-                                r.userRegister(
-                                    name: nameController.text,
-                                    email: emailOrPhoneController.text,
-                                    password: passwordController.text,
-                                    gender: genderController.text,
-                                    talents: r.talents);
-                              }
-                            },
-                            minWidth: double.infinity,
-                            color: const Color.fromRGBO(210, 153, 5, 1),
-                            child: const Text(
-                              'SIGN UP',
-                              style: TextStyle(
-                                color: Colors.white,
-                              ),
-                            ),
-                          ),
-                        ),
-                        SizedBox(
-                          height:
-                              MediaQuery.of(context).size.height > 800 ? 10 : 10,
-                        ),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            const Text(
-                              'Already a member?',
-                              style: TextStyle(
-                                  fontWeight: FontWeight.w400, fontSize: 18),
-                            ),
-                            TextButton(
-                              onPressed: () {
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (context) =>  Login(),
-                                  ),
-                                );
-                              },
-                              child: const Text(
-                                'Log In',
-                                style: TextStyle(
-                                  color: Color(0xFFEAA900),
-                                  fontWeight: FontWeight.w400,
-                                  fontSize: 18,
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
-                        const SizedBox(
-                          height: 20,
-                        ),
-                      ],
-                    ),
-                  ),
+    return BlocConsumer<RegisterCubit, RegisterStates>(
+      listener: (context, state) {
+        if (state is RegisterSuccessState) {
+          scaff.showSnackBar(
+            SnackBar(
+              elevation: 0,
+              backgroundColor: Colors.green,
+              content: Center(
+                child: Text(
+                  state.success,
                 ),
               ),
             ),
           );
-        },
-      ),
+        } else if (state is RegisterErrorState) {
+          scaff.showSnackBar(
+            SnackBar(
+              elevation: 0,
+              backgroundColor: Colors.red,
+              content: const Center(
+                child: Text("An error occurred try again !"),
+              ),
+            ),
+          );
+        }
+      },
+      builder: (context, state) {
+        var r = RegisterCubit.get(context);
+        return Scaffold(
+          body: SafeArea(
+            child: Container(
+              child: Center(
+                child: SingleChildScrollView(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      if (state is RegisterLoadingState)
+                        const SizedBox(height: 30),
+                      if (state is RegisterLoadingState)
+                        Center(child: LinearProgressIndicator()),
+                      const SizedBox(
+                        height: 30,
+                      ),
+                      Image.asset('assets/Group_58.png'),
+                      const SizedBox(
+                        height: 30,
+                      ),
+                      Form(
+                        key: far,
+                        child: Column(
+                          children: [
+                            textFormF('Full Name', r.nameController),
+                            textFormF('Email Adress or Moblie number',
+                                r.emailOrPhoneController),
+                            textFormF('Password', r.passwordController),
+                            textFormF('Gender', r.genderController),
+                          ],
+                        ),
+                      ),
+                      const Padding(
+                        padding: EdgeInsets.all(8.0),
+                        child: Divider(color: Colors.black),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            ElevatedButton(
+                              style: ElevatedButton.styleFrom(
+                                primary:
+                                    const Color.fromRGBO(234, 169, 0, 0.6),
+                              ),
+                              onPressed: () {
+                                Navigator.of(context).pop();
+                              },
+                              child: const Text('BACK'),
+                            ),
+                            ElevatedButton(
+                              style: ElevatedButton.styleFrom(
+                                primary: const Color.fromRGBO(234, 169, 0, 1),
+                              ),
+                              onPressed: () {
+                                if (far.currentState!.validate()) {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) => HelperTalents(),
+                                    ),
+                                  );
+                                }
+                              },
+                              child: const Text('NEXT'),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            ),
+          ),
+        );
+      },
     );
   }
 
@@ -238,12 +145,51 @@ class Register extends StatelessWidget {
         controller: c,
         keyboardType: TextInputType.text,
         validator: (String? value) {
-          if (value!.isEmpty) {
-            return 'the name must not be empty';
+          if (label == 'Full Name') {
+            if (value!.isEmpty) {
+              return 'the name must not be empty';
+            }
+            if (value.contains('_') || value.contains(' ')) {
+              return 'the name Cannot be contains _ or space ';
+            }
+          }
+          if (label == 'Email Adress or Moblie number') {
+            if (value!.isEmpty) {
+              return 'the email must not be empty';
+            }
+            if (!value.contains('@') || value.contains(' ')) {
+              return 'the email must be contains @';
+            }
+            if (value.contains(' ')) {
+              return 'the email Cannot be contains space';
+            }
+          }
+          if (label == 'Password') {
+            if (value!.isEmpty) {
+              return 'the password must not be empty';
+            }
+            if (!value.contains('@') || !value.contains('.')) {
+              return 'the Password must be contains @ and .';
+            }
+            if (!validateStructure(value)) {
+              return 'must be contains numbers and UPPer case and lower case letters';
+            }
+          }
+          if (label == 'Gender') {
+            if (value!.isEmpty) {
+              return 'the gender must not be empty';
+            }
           }
           return null;
         },
       ),
     );
+  }
+
+  bool validateStructure(String value) {
+    String pattern =
+        r'^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[!@#\$&*~]).{8,}$';
+    RegExp regExp = new RegExp(pattern);
+    return regExp.hasMatch(value);
   }
 }

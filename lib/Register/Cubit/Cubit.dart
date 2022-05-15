@@ -161,4 +161,14 @@ class RegisterCubit extends Cubit<RegisterStates> {
     emit(RegisterChangePasswordVisibilityState());
     return l1;
   }
+
+  var nameController = TextEditingController();
+
+  var emailOrPhoneController = TextEditingController();
+
+  var genderController = TextEditingController();
+
+  var passwordController = TextEditingController();
+
+
 }
